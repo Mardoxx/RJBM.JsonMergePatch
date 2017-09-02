@@ -6,20 +6,24 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 namespace RJBM.JsonMergePatch
 {
+    [DataContract]
+    [KnownType(nameof(KnownTypes))]
     [JsonConverter(typeof(Converters.JsonMergePatchDocumentJsonConverter))]
     public class JsonMergePatchDocument<T> : IJsonMergePatchDocument<T>
         where T : class
     {
+        [DataMember(Name = nameof(Members))]
         private readonly ReadOnlyDictionary<string, IJsonMergePatchValue> _members;
 
         public JsonMergePatchDocument()
         {
             PropertyInfo[] typeProperties = typeof(T).GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
 
-            var members = new Dictionary<string, IJsonMergePatchValue>();
+            Dictionary<string, IJsonMergePatchValue> members = new Dictionary<string, IJsonMergePatchValue>();
 
             for (int i = 0; i < typeProperties.Length; ++i)
             {
@@ -53,12 +57,12 @@ namespace RJBM.JsonMergePatch
             PropertyInfo[] typeProperties = typeInfo.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
             string[] typePropertyNames = typeProperties.Select(x => x.Name).ToArray();
 
-            var validMemberNames = _members.Keys.Where(x => typePropertyNames.Contains(x)).ToArray();
+            var validMemberNames = _members.Keys.Intersect(typePropertyNames).ToArray();
 
             for (int i = 0; i < validMemberNames.Length; ++i)
             {
                 string memberName = validMemberNames[i];
-                var member = Get(memberName);
+                IJsonMergePatchValue member = Get(memberName);
                 if (member.IsDefined)
                 {
                     typeInfo.GetProperty(memberName).SetValue(to, member.Value);
@@ -75,6 +79,17 @@ namespace RJBM.JsonMergePatch
             PropertyInfo propertyInfo = memberExpression.Member as PropertyInfo ?? throw new ArgumentException($"Expression '{expr}' refers to a field, not a property.");
 
             return (JsonMergePatchValue<TMember>)Get(propertyInfo.Name);
+        }
+
+        private static Type[] KnownTypes()
+        {
+            PropertyInfo[] typeProperties = typeof(T).GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
+
+            return typeProperties.Select(x =>
+            {
+                Type mergePatchValueTypeArg = x.PropertyType;
+                return typeof(JsonMergePatchValue<>).MakeGenericType(mergePatchValueTypeArg);
+            }).ToArray();
         }
     }
 }

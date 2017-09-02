@@ -1,8 +1,15 @@
-﻿namespace RJBM.JsonMergePatch.Internal
+﻿using System;
+using System.Runtime.Serialization;
+
+namespace RJBM.JsonMergePatch.Internal
 {
+    [DataContract]
+    [KnownType(nameof(KnownTypes))]
     public class JsonMergePatchValue<T> : IJsonMergePatchValue<T>
     {
+        [DataMember(Name = "Value", Order = 0)]
         private T _value;
+        [DataMember(Name = "IsDefined", Order = 1)]
         private bool _isDefined;
 
         public JsonMergePatchValue()
@@ -67,6 +74,11 @@
         public override string ToString()
         {
             return _isDefined ? _value.ToString() : "";
+        }
+
+        private static Type[] KnownTypes()
+        {
+            return new Type[] { typeof(T) };
         }
     }
 }

@@ -22,7 +22,7 @@ namespace RJBM.JsonMergePatch.Converters
             JObject jObject = JObject.Load(reader);
 
             PropertyInfo[] mergePatchProps = mergePatchTypeArg.GetTypeInfo().GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.DeclaredOnly);
-            for (var i = 0; i < mergePatchProps.Length; ++i)
+            for (int i = 0; i < mergePatchProps.Length; ++i)
             {
                 PropertyInfo prop = mergePatchProps[i];
 
@@ -45,7 +45,7 @@ namespace RJBM.JsonMergePatch.Converters
 
             KeyValuePair<string, IJsonMergePatchValue>[] setMembers = ((IJsonMergePatchDocument)value).Members.Where(x => x.Value.IsDefined).ToArray();
 
-            for (var i = 0; i < setMembers.Length; ++i)
+            for (int i = 0; i < setMembers.Length; ++i)
             {
                 KeyValuePair<string, IJsonMergePatchValue> member = setMembers[i];
 
