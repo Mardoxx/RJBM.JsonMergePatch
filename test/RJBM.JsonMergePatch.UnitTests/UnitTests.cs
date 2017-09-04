@@ -15,6 +15,7 @@ namespace RJBM.JsonMergePatch.UnitTests
         public int Int2 { get; set; }
         public int? NullableInt1 { get; set; }
         public string String1 { get; set; }
+        public ChildObject ChildObject { get; set; }
     }
 
     public class SomeDTO
@@ -30,8 +31,12 @@ namespace RJBM.JsonMergePatch.UnitTests
         [Fact]
         public void Excludes_Undefined_Values_In_Serialization()
         {
+
             var patchDocument = new JsonMergePatchDocument<ParentObject>();
-            patchDocument.Get(x => x.Int1);
+            patchDocument.Get(x => x.Int1).Value = 10;
+            patchDocument.Get(x => x.Int2).Value = 11;
+            patchDocument.Get(x => x.NullableInt1).Value = null;
+            patchDocument.Get(x => x.ChildObject).Value = new ChildObject { Guid1 = Guid.NewGuid() };
 
             var serialized = JsonConvert.SerializeObject(patchDocument, new JsonSerializerSettings
             {
@@ -96,6 +101,14 @@ namespace RJBM.JsonMergePatch.UnitTests
             Assert.Equal(2, dto.Int2);
             Assert.Null(dto.String1);
             Assert.Equal("Initial2", dto.String2);
+        }
+
+        [Fact]
+        public void Throws_InvalidOperationException_if_deref_undefined_value()
+        {
+            var patchDocument = new JsonMergePatchDocument<ParentObject>();
+
+            Assert.Throws(typeof(InvalidOperationException), () => { _ = patchDocument.Get(x => x.Int1).Value; });
         }
     }
 }

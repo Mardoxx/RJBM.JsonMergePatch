@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RJBM.JsonMergePatch", "src\RJBM.JsonMergePatch\RJBM.JsonMergePatch.csproj", "{B87DDD0D-AE33-4FE8-83C9-9BC7280C1AD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RJBM.JsonMergePatch", "src\RJBM.JsonMergePatch\RJBM.JsonMergePatch.csproj", "{B87DDD0D-AE33-4FE8-83C9-9BC7280C1AD3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D5F28D9C-F18E-4CB2-BF4B-5D5F26BC4C96}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{90C19C84-747E-40CA-B852-09FF1D5FB1AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RJBM.JsonMergePatch.UnitTests", "test\RJBM.JsonMergePatch.UnitTests\RJBM.JsonMergePatch.UnitTests.csproj", "{18AC0B22-204E-4A69-82D2-9653B2C7E996}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RJBM.JsonMergePatch.UnitTests", "test\RJBM.JsonMergePatch.UnitTests\RJBM.JsonMergePatch.UnitTests.csproj", "{18AC0B22-204E-4A69-82D2-9653B2C7E996}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "host", "host", "{3BE8ED99-D655-4BDE-AE4B-7BD149FEDB25}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RJBM.JsonMergePatch.Web", "host\RJBM.JsonMergePatch.Web\RJBM.JsonMergePatch.Web.csproj", "{5CB4C8BB-02F3-42BC-B0C4-ACE7A2AB1343}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +29,10 @@ Global
 		{18AC0B22-204E-4A69-82D2-9653B2C7E996}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18AC0B22-204E-4A69-82D2-9653B2C7E996}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18AC0B22-204E-4A69-82D2-9653B2C7E996}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CB4C8BB-02F3-42BC-B0C4-ACE7A2AB1343}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CB4C8BB-02F3-42BC-B0C4-ACE7A2AB1343}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CB4C8BB-02F3-42BC-B0C4-ACE7A2AB1343}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CB4C8BB-02F3-42BC-B0C4-ACE7A2AB1343}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{B87DDD0D-AE33-4FE8-83C9-9BC7280C1AD3} = {D5F28D9C-F18E-4CB2-BF4B-5D5F26BC4C96}
 		{18AC0B22-204E-4A69-82D2-9653B2C7E996} = {90C19C84-747E-40CA-B852-09FF1D5FB1AC}
+		{5CB4C8BB-02F3-42BC-B0C4-ACE7A2AB1343} = {3BE8ED99-D655-4BDE-AE4B-7BD149FEDB25}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5DEF5AB3-9452-4799-A080-3F39190ABD27}

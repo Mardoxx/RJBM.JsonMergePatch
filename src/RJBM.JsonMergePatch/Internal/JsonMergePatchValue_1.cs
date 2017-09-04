@@ -15,7 +15,6 @@ namespace RJBM.JsonMergePatch.Internal
         public JsonMergePatchValue()
         {
             _isDefined = false;
-            _value = default(T);
         }
 
         public JsonMergePatchValue(T value) : this()
@@ -30,12 +29,12 @@ namespace RJBM.JsonMergePatch.Internal
         {
             get
             {
-                if (_isDefined)
+                if (!_isDefined)
                 {
-                    return _value;
+                    throw new InvalidOperationException($"{nameof(JsonMergePatchValue<T>)} object must have a value.");
                 }
 
-                return default(T);
+                return _value;
             }
 
             set
@@ -74,6 +73,16 @@ namespace RJBM.JsonMergePatch.Internal
         public override string ToString()
         {
             return _isDefined ? _value.ToString() : "";
+        }
+
+        public static explicit operator T(JsonMergePatchValue<T> val)
+        {
+            return val.Value;
+        }
+
+        public static implicit operator JsonMergePatchValue<T>(T val)
+        {
+            return new JsonMergePatchValue<T>(val);
         }
 
         private static Type[] KnownTypes()
